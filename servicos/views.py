@@ -73,4 +73,4 @@ def deletar_servico(request, pk):
     context = {
         'servico': servico,
     }
-    return render(request, 'servicos/confirme_delete.html', context)
+    return render(request, 'servicos/confirm_delete.html', context)

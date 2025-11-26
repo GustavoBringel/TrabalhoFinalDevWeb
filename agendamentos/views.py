@@ -39,7 +39,7 @@ def novo_editar_agendamento(request, pk=None):
         'form': form,
         'agendamento': agendamento,
     }
-    return render(request, 'form_agendamento.html', context)
+    return render(request, 'agendamentos/novo.html', context)
 
 
 # -------------------------------------------------------------
@@ -69,7 +69,7 @@ def listar_agendamentos(request):
         'total_pendente': total_pendente,
         'termo_busca': termo_busca,
     }
-    return render(request, 'listar_agendamentos.html', context)
+    return render(request, 'agendamentos/listar.html', context)
     
 # -------------------------------------------------------------
 # VIEW DE DELEÇÃO (Para completar o CRUD)
@@ -86,4 +86,4 @@ def deletar_agendamento(request, pk):
     context = {
         'agendamento': agendamento,
     }
-    return render(request, 'deletar_agendamento.html', context)
+    return render(request, 'agendamentos/confirm_delete.html', context)

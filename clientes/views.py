@@ -75,4 +75,4 @@ def deletar_cliente(request, pk):
     context = {
         'cliente': cliente, # Variável usada no template
     }
-    return render(request, 'clientes/confirme_delete.html', context)
+    return render(request, 'clientes/confirm_delete.html', context)
