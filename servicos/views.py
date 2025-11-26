@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import Servico
 from .forms import ServicoForm
+from .serializers import ServicoSerializer
+from rest_framework import viewsets, permissions
 
 # 1. VIEW DE LISTAGEM E BUSCA
 def listar_servicos(request):
@@ -72,3 +74,12 @@ def deletar_servico(request, pk):
         'servico': servico,
     }
     return render(request, 'servicos/confirm_delete.html', context)
+
+class ServicoViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint que permite que serviços sejam vistos ou editados.
+    """
+    queryset = Servico.objects.all().order_by('nome')
+    serializer_class = ServicoSerializer
+    # Define as permissões (apenas usuários autenticados podem modificar)
+    permission_classes = [permissions.IsAuthenticated]

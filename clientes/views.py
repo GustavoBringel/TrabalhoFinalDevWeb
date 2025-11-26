@@ -3,6 +3,8 @@ from .models import Cliente
 from .forms import ClienteForm
 from django.contrib import messages
 from django.db.models import Q
+from .serializers import ClienteSerializer
+from rest_framework import viewsets, permissions
 
 def listar_clientes(request):
     # Obtém todos os clientes inicialmente
@@ -76,3 +78,15 @@ def deletar_cliente(request, pk):
         'cliente': cliente, # Variável usada no template
     }
     return render(request, 'clientes/confirm_delete.html', context)
+
+class ClienteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint que permite que clientes sejam vistos ou editados.
+    Fornece automaticamente 'list', 'create', 'retrieve', 'update' e 'destroy'.
+    """
+    # Define o queryset base (todos os clientes)
+    queryset = Cliente.objects.all().order_by('nome')
+    # Define o serializador a ser usado
+    serializer_class = ClienteSerializer
+    # Define as permissões (apenas usuários autenticados podem modificar)
+    permission_classes = [permissions.IsAuthenticated]

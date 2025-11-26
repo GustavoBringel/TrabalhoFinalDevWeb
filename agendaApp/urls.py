@@ -17,6 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from agendaApp import views as agendaApp_views
+from rest_framework import routers
+from clientes.views import ClienteViewSet
+from agendamentos.views import AgendamentoViewSet
+from servicos.views import ServicoViewSet
+
+router = routers.DefaultRouter()
+router.register(r'clientes', ClienteViewSet)
+router.register(r'agendamentos', AgendamentoViewSet)
+router.register(r'servicos', ServicoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +37,7 @@ urlpatterns = [
     path('agendamentos/', include('agendamentos.urls')),
     path('clientes/', include('clientes.urls')),
     path('servicos/', include('servicos.urls')),
+
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

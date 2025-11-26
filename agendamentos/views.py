@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
 from django.utils import timezone 
-from datetime import timedelta # <-- NOVO IMPORT
+from datetime import timedelta
 from .models import Agendamento
 from .forms import AgendamentoForm
+from .serializers import AgendamentoSerializer
+from rest_framework import viewsets, permissions
 
 # -------------------------------------------------------------
 # VIEW DE CADASTRO/EDIÇÃO (Com Validações de Tempo e Conflito)
@@ -152,3 +154,14 @@ def deletar_agendamento(request, pk):
         'agendamento': agendamento,
     }
     return render(request, 'agendamentos/confirm_delete.html', context)
+
+class AgendamentoViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint que permite agendamentos sejam vistos ou editados.
+    Filtra agendamentos passados para a lista padrão.
+    """
+    # Filtra Agendamentos a partir do momento atual para o GET (listagem)
+    queryset = Agendamento.objects.all().order_by('-data_hora')
+    serializer_class = AgendamentoSerializer
+    # Define as permissões (apenas usuários autenticados podem modificar)
+    permission_classes = [permissions.IsAuthenticated]
