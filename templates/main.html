@@ -1,0 +1,90 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block title %}SalãoConnect - Gerenciamento{% endblock %}
+
+{% block css_local %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.4.3/dist/css/coreui.min.css" rel="stylesheet" integrity="sha384-oMIIhJL1T5s+PxJr6+Qb0pO1IRFB6OGMM+J57UBT3UQKxSVsb++MkXpu9cLqaJxu" crossorigin="anonymous">
+    {# Adicionando estilos do Tailwind e fontes #}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        #conteudo { font-family: 'Inter', sans-serif; }
+    </style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">SalãoConnect</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Agenda de Hoje</a>
+          </li>
+          {# LINKS SIMPLIFICADOS PARA AS TELAS DE LISTAGEM #}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'listar-clientes' %}">Clientes</a>
+            <a class="nav-link" href="{% url 'listar-servicos' %}">Serviços</a>
+            <a class="nav-link" href="{% url 'novo-agendamento' %}">Novo Agendamento</a>
+          </li>
+        </ul>
+        <br>
+        <div class="mt-3">
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger w-100">
+                Logout ({{ user.get_username }})
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="padding-top: 70px;">
+    {# Menu secundário (Listagens) - Mantido para consistência #}
+    <div id="menu-superior" class="mb-4">
+        <div class="container d-flex justify-content-center">
+            <ul class="nav nav-pills nav-fill w-75">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Listar Agendamentos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'listar-clientes' %}active{% endif %}" href="{% url 'listar-clientes' %}">Listar Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'listar-servicos' %}active{% endif %}" href="{% url 'listar-servicos' %}">Listar Serviços</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="conteudo">
+        {# Bloco para exibir mensagens do Django #}
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block conteudo %}{% endblock %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+{% endblock %}

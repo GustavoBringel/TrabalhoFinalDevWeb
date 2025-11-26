@@ -1,0 +1,78 @@
+{% extends "main.html" %}
+
+{% block title %}Lista de Serviços{% endblock %}
+
+{% block conteudo %}
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Lista de Serviços Oferecidos</h1>
+
+    {# Exibir a Quantidade Cadastrada #}
+    <div class="mb-4 p-3 bg-gray-100 rounded-md shadow-sm">
+        <p class="text-sm font-medium text-gray-700">
+            Total de Serviços Cadastrados: 
+            <span class="font-semibold text-lg text-indigo-600">{{ quantidade_total }}</span>
+        </p>
+        {% if termo_busca %}
+        <p class="text-sm text-gray-600">
+            Serviços Encontrados na Busca: <span class="font-semibold text-base text-green-600">{{ quantidade_filtrada }}</span>
+        </p>
+        {% endif %}
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+        {# Botão para Novo Cadastro de Serviço #}
+        <a href="{% url 'cadastrar-servico' %}" class="btn btn-success mb-3 sm:mb-0 w-full sm:w-auto">
+            + Novo Serviço
+        </a>
+
+        {# Campo de Busca (Filtro) #}
+        <form method="get" action="{% url 'listar-servicos' %}" class="w-full sm:max-w-md">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Buscar por nome ou descrição..." 
+                       value="{{ termo_busca|default:'' }}">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+                {% if termo_busca %}
+                    <a href="{% url 'listar-servicos' %}" class="btn btn-secondary">Limpar</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    {# Tabela de Serviços #}
+    <div class="overflow-x-auto shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Serviço</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Preço</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Duração (min)</th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+                {% for servico in servicos %}
+                <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{{ servico.nome }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">R$ {{ servico.preco|default:"0.00" }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ servico.duracao_minutos }} min</td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-sm font-medium text-center">
+                        <a href="{% url 'editar-servico' servico.pk %}" class="text-indigo-600 hover:text-indigo-900 mx-1">Editar</a>
+                        |
+                        <a href="{% url 'deletar-servico' servico.pk %}" class="text-red-600 hover:text-red-900 mx-1">Excluir</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-4 text-gray-500">
+                        Nenhum serviço cadastrado.
+                        {% if termo_busca %}
+                            A busca por **"{{ termo_busca }}"** não retornou resultados.
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

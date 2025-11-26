@@ -1,0 +1,46 @@
+{% extends "main.html" %}
+
+{% block title %}Confirmar Exclusão de Cliente{% endblock %}
+
+{% block conteudo %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="text-center mb-0">Confirmar Exclusão de Cliente</h2>
+                </div>
+                <div class="card-body text-center">
+                    
+                    <div class="alert alert-warning" role="alert">
+                         <p class="lead mb-0">
+                            **Atenção!** Você tem certeza que deseja **apagar permanentemente** este cliente? Esta ação é **irreversível**.
+                         </p>
+                    </div>
+
+                    <h4 class="mb-4 mt-3 text-danger">
+                        {# Exibe o nome do cliente a ser excluído #}
+                        Cliente: "{{ cliente.nome }}"
+                    </h4>
+
+                    <p class="text-muted">
+                        Telefone: {{ cliente.telefone }} | Email: {{ cliente.email }}
+                    </p>
+
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        
+                        {# Botão para cancelar volta para a lista de clientes #}
+                        <a href="{% url 'listar-clientes' %}" class="btn btn-secondary btn-lg">Cancelar</a>
+                        
+                        {# Botão de confirmação de exclusão #}
+                        <button type="submit" class="btn btn-danger btn-lg">Sim, Apagar Cliente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

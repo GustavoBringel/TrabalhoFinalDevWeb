@@ -1,0 +1,189 @@
+/* Container Principal da Página */
+/* Renomeado de ":host" para ".login-page" */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+/* Header */
+.header {
+  background: black;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  color: #ff3333;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Container Principal do Formulário */
+.login-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.login-box {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 350px;
+  max-height: 240px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 70px;
+}
+
+.login-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Formulário e Grupos de Campos */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  height: 45px;
+}
+
+.form-group:focus-within {
+  border-color: #ff3333;
+  box-shadow: 0 0 0 1px #ff3333;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: #999;
+  margin-left: 5px;
+}
+
+.form-group input {
+  flex-grow: 1;
+  border: none;
+  padding: 0 5px;
+  font-size: 1rem;
+  background: transparent;
+  height: 100%;
+}
+
+.form-group input:focus {
+  outline: none;
+}
+
+/* Estilo dos Ícones */
+.input-icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* Opções do Formulário (Manter Login / Esqueceu a Senha) */
+.form-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 0.9rem;
+  gap: 15px;
+}
+
+.barra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #000000;
+  height: 15px;
+}
+
+.form-options a {
+  color: #ff3333;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.form-options a:hover {
+  text-decoration: underline;
+}
+
+ul.messages {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 100%;
+  max-width: 350px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  pointer-events: none; /* Não atrapalha clique nos campos */
+}
+
+ul.messages li {
+  background: #ffe0e0;
+  color: #b30000;
+  border: 1px solid #ffb3b3;
+  border-radius: 4px;
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  opacity: 0.98;
+  pointer-events: auto;
+}
+
+/* Botão de Entrar */
+.login-form button[type="submit"] {
+  width: 180px;
+  padding: 15px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.2s;
+  
+  /* Posicionamento do botão */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.login-form button[type="submit"]:hover {
+  background-color: #333;
+  transform: translate(-50%, 50%) translateY(-2px);
+}
