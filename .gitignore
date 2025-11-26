@@ -1,0 +1,44 @@
+# Arquivos de Ambiente Python (Python Environment Files)
+######################################
+
+# Ignora pastas de ambientes virtuais comuns
+.venv/
+venv/
+env/
+
+# Arquivos de bytecode (criados durante a execução do Python)
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# --- Django e Mídia ---
+######################################
+
+# O arquivo de banco de dados SQLite (mantenha-o fora do Git!)
+db.sqlite3
+*.sqlite3
+
+# Diretório onde o Django coleta arquivos estáticos em produção (se usado)
+/staticfiles/
+
+# Diretório para arquivos de mídia/uploads (pode conter dados sensíveis de usuários)
+/media/
+
+# Arquivos de log
+*.log
+
+# --- Configurações Secretas ---
+######################################
+
+# Arquivo de variáveis de ambiente (CRUCIAL para segurança da SECRET_KEY e credenciais)
+.env
+
+# --- Dependências de Sistema/OS ---
+######################################
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
