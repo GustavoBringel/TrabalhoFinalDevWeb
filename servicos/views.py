@@ -1,8 +1,6 @@
-# Seu arquivo views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.db.models import Q # Importado para fazer a busca
+from django.db.models import Q
 from .models import Servico
 from .forms import ServicoForm
 

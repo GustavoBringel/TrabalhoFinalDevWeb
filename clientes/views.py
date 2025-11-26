@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cliente
 from .forms import ClienteForm
 from django.contrib import messages
+from django.db.models import Q
 
 def listar_clientes(request):
     # Obtém todos os clientes inicialmente

@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.utils import timezone
 from agendamentos.models import Agendamento
+from django.db.models import Q
 
 def login_view(request):
     if request.method == 'POST':
