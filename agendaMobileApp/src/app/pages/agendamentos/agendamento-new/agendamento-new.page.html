@@ -1,0 +1,38 @@
+<!-- src/app/pages/agendamentos/agendamento-new/agendamento-new.page.html -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/agendamentos"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Novo Agendamento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="agendamentoForm" (ngSubmit)="createAgendamento()">
+    <ion-item>
+      <ion-label position="floating">Cliente</ion-label>
+      <ion-select formControlName="cliente" interface="popover">
+        <ion-select-option *ngFor="let cliente of clientes$ | async" [value]="cliente.id">{{ cliente.nome }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Serviço</ion-label>
+      <ion-select formControlName="servico" interface="popover">
+        <ion-select-option *ngFor="let servico of servicos$ | async" [value]="servico.id">{{ servico.nome }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Data e Hora</ion-label>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime" formControlName="data_hora"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="agendamentoForm.invalid" class="ion-margin-top">
+      Salvar
+    </ion-button>
+  </form>
+</ion-content>

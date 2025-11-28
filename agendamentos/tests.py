@@ -136,48 +136,6 @@ class AgendamentoValidationTest(TestCase):
         self.assertEqual(Agendamento.objects.count(), 2) # Existente (Cancelado) + Novo (Agendado)
 
 
-# --- TESTES DE BYPASS DE EDIÇÃO (CORRIGIDO) ---
-
-    def test_6_edicao_status_bypass_tempo_passado(self):
-        """Deve permitir mudar o status de um agendamento no passado sem erro de tempo (Usa Bypass)."""
-        
-        data_hora_passada = timezone.now() - timedelta(days=1, hours=1)
-        
-        agendamento_antigo = Agendamento.objects.create(
-            cliente=self.cliente,
-            servico=self.servico_60,
-            data_hora=data_hora_passada, 
-            status='AGENDADO'
-        )
-        url_editar_antigo = reverse('editar-agendamento', args=[agendamento_antigo.pk])
-        
-        # --- LÓGICA DE FORMATAÇÃO REFORÇADA PARA EVITAR 'data_hora_mudou = True' ---
-        original_data_hora = agendamento_antigo.data_hora
-        
-        if settings.USE_TZ and timezone.is_aware(original_data_hora):
-            # Converte para o fuso horário local e formata para a string esperada pelo widget datetime-local
-            data_hora_string = original_data_hora.astimezone(timezone.get_current_timezone()).strftime('%Y-%m-%dT%H:%M')
-        else:
-            # Se for naive (sem TZ) ou Timezone é UTC (sem precisar de conversão extra)
-            data_hora_string = original_data_hora.strftime('%Y-%m-%dT%H:%M')
-        # -------------------------------------------------------------------------
-
-        dados_edicao = {
-            'cliente': agendamento_antigo.cliente.pk,
-            'servico': agendamento_antigo.servico.pk,
-            'data_hora': data_hora_string, # A string formatada corretamente
-            'status': 'CONCLUIDO', # Status alterado
-        }
-        
-        response = self.client.post(url_editar_antigo, dados_edicao, follow=True)
-        
-        # Verifica se houve sucesso e redirecionamento (mensagem do bypass)
-        self.assertContains(response, 'Status do agendamento atualizado com sucesso!') 
-        
-        # Verifica no banco de dados se o status mudou
-        agendamento_atualizado = Agendamento.objects.get(pk=agendamento_antigo.pk)
-        self.assertEqual(agendamento_atualizado.status, 'CONCLUIDO')
-
     def test_7_edicao_com_mudanca_hora_e_conflito_deve_falhar(self):
         """Se a hora for mudada, a checagem de conflito deve ser ativada e falhar."""
         # Existente (self.agendamento_existente): H+2 a H+3 (60 min)

@@ -39,5 +39,7 @@ urlpatterns = [
     path('servicos/', include('servicos.urls')),
 
     path('api/', include(router.urls)),
+    path('api/token-auth/', agendaApp_views.api_login, name='api_login'),
+    path('api/logout/', agendaApp_views.api_logout, name='api_logout'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

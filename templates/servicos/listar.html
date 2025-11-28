@@ -27,6 +27,7 @@
 
         {# Campo de Busca (Filtro) #}
         <form method="get" action="{% url 'listar-servicos' %}" class="w-full sm:max-w-md">
+            {% csrf_token %}
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Buscar por nome ou descrição..." 
                        value="{{ termo_busca|default:'' }}">

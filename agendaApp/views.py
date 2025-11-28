@@ -6,6 +6,10 @@ from django.views import View
 from django.utils import timezone
 from agendamentos.models import Agendamento
 from django.db.models import Q
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_200_OK
+from rest_framework.authtoken.models import Token
 
 def login_view(request):
     if request.method == 'POST':
@@ -67,3 +71,55 @@ class HomeView(LoginRequiredMixin, View):
         return render(request, 'main.html', context)
     
 home = HomeView.as_view()
+
+
+# ===== API REST para Autenticação (Mobile App) =====
+
+@api_view(['POST'])
+def api_login(request):
+    """
+    Endpoint REST para autenticação via Token.
+    Esperado: { "username": "user", "password": "pass" }
+    Retorna: { "token": "abc123..." } ou erro 400
+    """
+    username = request.data.get('username')
+    password = request.data.get('password')
+    
+    if not username or not password:
+        return Response(
+            {'error': 'Usuário e senha são obrigatórios.'},
+            status=HTTP_400_BAD_REQUEST
+        )
+    
+    # Autentica o usuário
+    user = authenticate(username=username, password=password)
+    
+    if user is None:
+        return Response(
+            {'error': 'Credenciais inválidas.'},
+            status=HTTP_400_BAD_REQUEST
+        )
+    
+    # Obtém ou cria o token para o usuário
+    token, created = Token.objects.get_or_create(user=user)
+    
+    return Response(
+        {'token': token.key},
+        status=HTTP_200_OK
+    )
+
+
+@api_view(['POST'])
+def api_logout(request):
+    """
+    Endpoint REST para logout. Deleta o token do usuário.
+    """
+    if request.user.is_authenticated:
+        try:
+            token = Token.objects.get(user=request.user)
+            token.delete()
+            return Response({'message': 'Logout realizado.'}, status=HTTP_200_OK)
+        except Token.DoesNotExist:
+            pass
+    
+    return Response({'message': 'Não há token ativo.'}, status=HTTP_200_OK)

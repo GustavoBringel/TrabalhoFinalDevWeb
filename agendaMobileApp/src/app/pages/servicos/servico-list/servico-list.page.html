@@ -1,0 +1,48 @@
+<!-- src/app/pages/servicos/servico-list/servico-list.page.html -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Serviços</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/servicos/novo']">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngIf="servicos$ | async as servicos; else loading">
+    <ion-item-sliding *ngFor="let servico of servicos">
+      <ion-item>
+        <ion-label>
+          <h2>{{ servico.nome }}</h2>
+          <p>{{ servico.descricao }}</p>
+          <p>Duração: {{ servico.duracao_minutos }} min - Preço: {{ servico.preco | currency:'BRL' }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="editServico(servico.id)">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="deleteServico(servico.id)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ng-template #loading>
+    <ion-list>
+      <ion-item *ngFor="let i of [1,2,3]">
+        <ion-label>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          <p><ion-skeleton-text animated style="width: 80%"></ion-skeleton-text></p>
+          <p><ion-skeleton-text animated style="width: 40%"></ion-skeleton-text></p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+</ion-content>

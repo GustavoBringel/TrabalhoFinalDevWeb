@@ -35,6 +35,7 @@
 
         {# Campo de Busca de Agendamento #}
         <form method="get" action="{% url 'listar-agendamentos' %}" class="w-full sm:max-w-md">
+            {% csrf_token %}
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Buscar por cliente ou serviço..." 
                        value="{{ termo_busca|default:'' }}">

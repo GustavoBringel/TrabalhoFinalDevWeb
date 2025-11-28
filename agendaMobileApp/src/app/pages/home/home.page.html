@@ -1,0 +1,23 @@
+<!-- src/app/pages/home/home.page.html -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Bem-vindo ao App de Agendamentos!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Use o menu para navegar entre as seções.</p>
+      <ion-button expand="block" routerLink="/agendamentos" class="ion-margin-top">Ver Agendamentos</ion-button>
+      <ion-button expand="block" routerLink="/clientes" color="secondary">Ver Clientes</ion-button>
+      <ion-button expand="block" routerLink="/servicos" color="tertiary">Ver Serviços</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

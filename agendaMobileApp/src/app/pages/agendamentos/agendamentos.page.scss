@@ -1,0 +1,27 @@
+ion-item-option {
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .info {
+        h2 {
+            font-weight: bold;
+        }
+        .data-hora {
+            display: flex;
+            align-items: center;
+            color: var(--ion-color-medium-shade);
+            font-size: 0.9em;
+        }
+    }
+
+    .status {
+        text-align: right;
+    }
+}

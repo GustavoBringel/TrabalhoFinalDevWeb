@@ -27,6 +27,7 @@
 
         {# Campo de Busca #}
         <form method="get" action="{% url 'listar-clientes' %}" class="w-full max-w-sm ml-4">
+            {% csrf_token %}
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Buscar por nome, telefone ou email..." 
                        value="{{ termo_busca|default:'' }}">

@@ -1,0 +1,33 @@
+<!-- src/app/pages/servicos/servico-edit/servico-edit.page.html -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/servicos"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Serviço</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="servicoForm" (ngSubmit)="updateServico()">
+    <ion-item>
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input formControlName="nome" type="text" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Descrição</ion-label>
+      <ion-textarea formControlName="descricao"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Duração (minutos)</ion-label>
+      <ion-input formControlName="duracao_minutos" type="number" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Preço</ion-label>
+      <ion-input formControlName="preco" type="number" required></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="servicoForm.invalid" class="ion-margin-top">
+      Salvar
+    </ion-button>
+  </form>
+</ion-content>

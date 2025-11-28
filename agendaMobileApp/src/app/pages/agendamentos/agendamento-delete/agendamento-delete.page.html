@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Remover Agendamento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <p>Tem certeza que deseja remover este agendamento?</p>
+    <ion-button color="danger" (click)="confirm()">Sim, remover</ion-button>
+    <ion-button (click)="cancel()">Cancelar</ion-button>
+  </div>
+</ion-content>
